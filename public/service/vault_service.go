@@ -39,3 +39,23 @@ func (v *VaultService) ReadSecret(key string) ([]byte, error) {
 
 	return []byte(value), nil
 }
+
+func NewVaultService(vaultAddress, token string) (*VaultService, error) {
+	config := &vault.Config{
+		Address: vaultAddress,
+	}
+
+	vaultClient, err := vault.NewClient(config)
+	if err != nil {
+		panic(err)
+	}
+
+	vaultClient.SetToken(token)
+
+	return &VaultService{
+		Vault: vaultClient,
+	}, nil
+}
+
+// Ensure that VaultService implements IVaultClient.
+var _ IVaultService = (*VaultService)(nil)
