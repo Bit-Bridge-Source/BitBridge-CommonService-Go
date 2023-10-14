@@ -1,23 +1,23 @@
-package service
+package common_crypto
 
 import "golang.org/x/crypto/bcrypt"
 
-type ICryptoService interface {
+type ICrypto interface {
 	GenerateFromPassword(password string) (string, error)
 	CompareHashAndPassword(hashedPassword, password string) error
 }
 
-type CryptoService struct{}
+type Crypto struct{}
 
-func NewCryptoService() ICryptoService {
-	return &CryptoService{}
+func NewCrypto() ICrypto {
+	return &Crypto{}
 }
 
-func (s *CryptoService) GenerateFromPassword(password string) (string, error) {
+func (s *Crypto) GenerateFromPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
 
-func (s *CryptoService) CompareHashAndPassword(hashedPassword, password string) error {
+func (s *Crypto) CompareHashAndPassword(hashedPassword, password string) error {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 }
