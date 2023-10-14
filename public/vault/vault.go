@@ -1,4 +1,4 @@
-package service
+package common_vault
 
 import (
 	"errors"
@@ -6,16 +6,16 @@ import (
 	vault "github.com/hashicorp/vault/api"
 )
 
-type IVaultService interface {
+type IVault interface {
 	ReadSecret(key string) ([]byte, error)
 }
 
-type VaultService struct {
-	Vault *vault.Client
+type Vault struct {
+	Client *vault.Client
 }
 
-func (v *VaultService) ReadSecret(key string) ([]byte, error) {
-	secret, err := v.Vault.Logical().Read(key)
+func (v *Vault) ReadSecret(key string) ([]byte, error) {
+	secret, err := v.Client.Logical().Read(key)
 	if err != nil {
 		return nil, err
 	}
