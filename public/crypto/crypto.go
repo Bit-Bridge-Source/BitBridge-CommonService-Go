@@ -14,7 +14,7 @@ func NewCrypto() ICrypto {
 }
 
 func (s *Crypto) GenerateFromPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	return string(bytes), err
 }
 
