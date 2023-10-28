@@ -11,3 +11,7 @@ func NewBitBridgeError(code int, message string) *BitBridgeError {
 		Message: message,
 	}
 }
+
+func (e *BitBridgeError) Error() string {
+	return e.Message
+}
