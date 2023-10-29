@@ -58,12 +58,14 @@ const (
 type ServiceError struct {
 	Code    int
 	Message string
+	Cause   error
 }
 
-func NewServiceError(code int, message string) *ServiceError {
+func NewServiceError(code int, message string, cause error) *ServiceError {
 	return &ServiceError{
 		Code:    code,
 		Message: message,
+		Cause:   cause,
 	}
 }
 
