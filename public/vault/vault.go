@@ -1,4 +1,4 @@
-package common_vault
+package vault
 
 import (
 	"errors"
@@ -12,6 +12,19 @@ type IVault interface {
 
 type Vault struct {
 	Client *vault.Client
+}
+
+func NewVault(vaultAddress string, token string) (*Vault, error) {
+	client, err := vault.NewClient(&vault.Config{
+		Address: vaultAddress,
+	})
+	if err != nil {
+		return nil, err
+	}
+	client.SetToken(token)
+	return &Vault{
+		Client: client,
+	}, nil
 }
 
 func (v *Vault) ReadSecret(key string) ([]byte, error) {
@@ -39,3 +52,6 @@ func (v *Vault) ReadSecret(key string) ([]byte, error) {
 
 	return []byte(value), nil
 }
+
+// Ensure that Vault implements IVault
+var _ IVault = (*Vault)(nil)

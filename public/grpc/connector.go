@@ -1,4 +1,4 @@
-package grpc_connector
+package grpc
 
 import (
 	"google.golang.org/grpc"
