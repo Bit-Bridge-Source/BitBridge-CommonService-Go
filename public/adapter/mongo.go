@@ -12,10 +12,16 @@ type MongoAdapter interface {
 	UpdateOne(ctx context.Context, filter interface{}, update interface{}, opts ...*options.UpdateOptions) (*mongo.UpdateResult, error)
 	DeleteOne(ctx context.Context, filter interface{}, opts ...*options.DeleteOptions) (*mongo.DeleteResult, error)
 	FindOne(ctx context.Context, filter interface{}, opts ...*options.FindOneOptions) *mongo.SingleResult
+	Find(ctx context.Context, filter interface{}, opts ...*options.FindOptions) (*mongo.Cursor, error)
 }
 
 type MongoAdapterImpl struct {
 	Adapter MongoAdapter
+}
+
+// Find implements IUserMongoAdapter.
+func (m *MongoAdapterImpl) Find(ctx context.Context, filter interface{}, opts ...*options.FindOptions) (*mongo.Cursor, error) {
+	return m.Adapter.Find(ctx, filter, opts...)
 }
 
 // DeleteOne implements IUserMongoAdapter.
